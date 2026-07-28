@@ -42,8 +42,8 @@ maxPrice, setMaxPrice, openFilter, setOpenFilter }: FilterBarProps){
         fetchColors()
     }, [])
 
-    const [categories, setCategories] = useState([])
-
+const [categories, setCategories] = useState<{id: number, name: string}[]>([])
+ 
     useEffect(() => {
         async function fetchCategories() {
             const result = await fetch(`${import.meta.env.VITE_API_URL}/categories`)
@@ -87,7 +87,7 @@ maxPrice, setMaxPrice, openFilter, setOpenFilter }: FilterBarProps){
         {openFilter === "brand" && (
             <div className="flex-col text-[13px] ">
                 <div className="border-b-1  md:border-b-1 border-[#000000]/[0.10] w-full "></div>
-                <div className="flex gap-4 sm:gap-8 md:gap-10 px-4 sm:px-6 md:px-10 py-4 md:py-7 justify-center text-[#000000]/[0.80] flex-wrap  ">
+                <div className="flex gap-4 sm:gap-8 md:gap-10 px-4 sm:px-6 md:px-10 py-4  md:py-7 justify-center text-[#000000]/[0.80] flex-wrap  ">
                   {brands.map(b => (
                 <button key={b} onClick={() => setBrand(b)} className={b === brand ? "underline text-[#A07830]" : "hover:text-[#A07830]"}>{b}</button>
                 ))}
