@@ -1,23 +1,31 @@
-import second_option from '../images/second_option.jpg'
+import first_option from '../images/first_option.jpg'
 
 function Hero(){
 
 
 return(
 
-<section id="home"  className = "flex flex-col justify-center h-[300px] md:h-[300px] lg:h-[500px] " style={{ backgroundImage: `url(${second_option})`,  backgroundSize: 'cover' , backgroundRepeat: 'no-repeat', backgroundPosition : 'center 15%'}}>
+<section id="home"  className = "flex flex-col justify-center items-center h-[400px] md:h-[500px] lg:h-[600px] " style={{ backgroundImage: `url(${first_option})`,  backgroundSize: 'cover' , backgroundRepeat: 'no-repeat', backgroundPosition : 'center 15%'}}>
 
 
-
-    <div className="">
-        <h1  className =" text-[40px] md:text-[60px] lg:text-[60px] text-[#F5F0E8] playfair-display-main px-10 md:px-13  leading-tight md:pt-45 pt-20  ">
+    <div className="flex-col items-center justify-center">
+        
+        <h1  className =" text-[40px] text-center great-vibes-regular md:text-[50px] lg:text-[60px] text-[#F5F0E8] pt-20 px-15 md:px-13 tracking-wider    ">
             Modest Fashion, 
-            <br />
             All In One Place</h1>
 
-            <p className = " text-[10px] md:text-[16px] lg:text-[16px] pt-2 md:pt-4 px-10 md:px-13 open-sans-main text-[#F5F0E8] opacity-80" >
+            <p className = " text-[12px] md:text-[15px] text-center lg:text-[15px] pt-2 md:pt-2.5 px-15 md:px-13 open-sans-main text-[#F5F0E8] " >
                 Discover curated pieces from your favorite brands
             </p>
+
+
+
+            
+
+
+
+
+
 
 
 
