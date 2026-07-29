@@ -62,25 +62,25 @@ const [categories, setCategories] = useState<{id: number, name: string}[]>([])
             <button 
                className={openFilter === "category" ? "py-2 px-3 sm:py-2.5 px-4 md:py-2.5 md:px-4 text-[#A07830] border-[#A07830] items-center justify-center flex rounded-full border text-[12px] sm:text-[13px] md:text-[13px] transition-colors" : "py-2 px-3 sm:py-2.5 sm:px-4 md:py-2.5 md:px-4 text-[#000000]/[0.80] items-center justify-center flex rounded-full border border-black/15 text-[12px] sm:text-[13px] md:text-[13px] hover:text-[#A07830] hover:border-[#A07830] transition-colors"} 
                 onClick={() => setOpenFilter(openFilter === "category" ? "" : "category")}  >
-            Category ↓
+            Category
             </button>
 
             <button 
             className={openFilter === "price" ? "py-2 px-3 sm:py-2.5 px-4 md:py-2.5 md:px-4 text-[#A07830] border-[#A07830] items-center justify-center flex rounded-full border text-[12px] sm:text-[13px] md:text-[13px] transition-colors" : "py-2 px-3 sm:py-2.5 sm:px-4 md:py-2.5 md:px-4 text-[#000000]/[0.80] items-center justify-center flex rounded-full border border-black/15 text-[12px] sm:text-[13px] md:text-[13px] hover:text-[#A07830] hover:border-[#A07830] transition-colors"} 
             onClick={() => setOpenFilter(openFilter === "price" ? "" : "price")} >
-            Price ↓
+            Price
             </button>
 
             <button 
             className={openFilter === "color" ? "py-2 px-3 sm:py-2.5 px-4 md:py-2.5 md:px-4 text-[#A07830] border-[#A07830] items-center justify-center flex rounded-full border text-[12px] sm:text-[13px] md:text-[13px] transition-colors" : "py-2 px-3 sm:py-2.5 sm:px-4 md:py-2.5 md:px-4 text-[#000000]/[0.80] items-center justify-center flex rounded-full border border-black/15 text-[12px] sm:text-[13px] md:text-[13px] hover:text-[#A07830] hover:border-[#A07830] transition-colors"} 
             onClick={() => setOpenFilter(openFilter === "color" ? "" : "color")} >
-            Color ↓
+            Color
             </button>
 
             <button 
             className={openFilter === "brand" ? "py-2 px-3 sm:py-2.5 px-4 md:py-2.5 md:px-4 text-[#A07830] border-[#A07830] items-center justify-center flex rounded-full border text-[12px] sm:text-[13px] md:text-[13px] transition-colors" : "py-2 px-3 sm:py-2.5 sm:px-4 md:py-2.5 md:px-4 text-[#000000]/[0.80] items-center justify-center flex rounded-full border border-black/15 text-[12px] sm:text-[13px] md:text-[13px] hover:text-[#A07830] hover:border-[#A07830] transition-colors"} 
             onClick={() => setOpenFilter(openFilter === "brand" ? "" : "brand")} >
-            Brand ↓
+            Brand
             </button>
         </div>
 
