@@ -13,12 +13,14 @@ import { useState, useEffect } from "react"
     setMaxPrice: React.Dispatch<React.SetStateAction<number | null>>;
     openFilter: string;
     setOpenFilter: React.Dispatch<React.SetStateAction<string>>;
+    showingAll: boolean;
+    setShowingAll: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 
 
 function FilterBar({ category_id, setCategoryId, brand, setBrand, color, setColor, minPrice, setMinPrice, 
-maxPrice, setMaxPrice, openFilter, setOpenFilter }: FilterBarProps){
+maxPrice, setMaxPrice, openFilter, setOpenFilter, setShowingAll }: FilterBarProps){
 
     const [brands, setBrands] = useState<string[]>([])
 
@@ -87,11 +89,11 @@ const [categories, setCategories] = useState<{id: number, name: string}[]>([])
         {openFilter === "brand" && (
             <div className="flex-col text-[13px] ">
                 <div className="border-b-1  md:border-b-1 border-[#000000]/[0.10] w-full "></div>
-                <div className="flex gap-4 sm:gap-8 md:gap-10 px-4 sm:px-6 md:px-10 py-4  md:py-7 justify-center text-[#000000]/[0.80] flex-wrap  ">
+                <div className="flex gap-4 sm:gap-8 md:gap-7 px-4 sm:px-6 md:px-10 py-4  md:py-7 justify-center text-[#000000]/[0.80] flex-wrap  ">
                   {brands.map(b => (
-                <button key={b} onClick={() => setBrand(b)} className={b === brand ? "underline text-[#A07830]" : "hover:text-[#A07830]"}>{b}</button>
+                <button key={b} onClick={() => { setBrand(b); setShowingAll(false); setOpenFilter("") }} className={b === brand ? "underline text-[#A07830]" : "hover:text-[#A07830]"}>{b}</button>
                 ))}
-                <button onClick={() => setBrand("")} className="hover:text-[#A07830] ">All Brands</button>
+                <button onClick={() => { setBrand(""); setShowingAll(true); setOpenFilter("") }} className="hover:text-[#A07830] ">All Brands</button>
                 </div>
             </div>
         )}
@@ -99,10 +101,11 @@ const [categories, setCategories] = useState<{id: number, name: string}[]>([])
         {openFilter === "category" && (
             <div className="flex-col text-[13px] ">
                 <div className="border-b-1  md:border-b-1 border-[#000000]/[0.10] w-full "></div>
-                <div className="flex gap-4 sm:gap-8 md:gap-10 px-4 sm:px-6 md:px-10 py-4 sm:py-5 md:py-7 justify-center text-[#000000]/[0.80] flex-wrap  ">
+                <div className="flex gap-4 sm:gap-8 md:gap-7 px-4 sm:px-6 md:px-10 py-4 sm:py-5 md:py-7 justify-center text-[#000000]/[0.80] flex-wrap  ">
                    {categories.map(cat => (
-                    <button key={cat.id} onClick={() => setCategoryId(cat.id)} className={cat.id === category_id ? "underline text-[#A07830]" : "hover:text-[#A07830]"}>{cat.name}</button>
+                    <button key={cat.id} onClick={() => { setCategoryId(cat.id); setShowingAll(false); setOpenFilter("") }} className={cat.id === category_id ? "underline text-[#A07830]" : "hover:text-[#A07830]"}>{cat.name}</button>
                     ))}
+                    <button onClick={() => { setCategoryId(null); setShowingAll(true); setOpenFilter("") }} className="hover:text-[#A07830]">All Categories</button>
                 </div>
             </div>
         )}
@@ -110,11 +113,11 @@ const [categories, setCategories] = useState<{id: number, name: string}[]>([])
         {openFilter === "color" && (
             <div className="flex-col text-[13px] ">
                 <div className="border-b-1  md:border-b-1 border-[#000000]/[0.10] w-full  "></div>
-                <div className="flex gap-4 sm:gap-8 md:gap-10 px-4 sm:px-6 md:px-10 py-4 sm:py-5 md:py-7 justify-center text-[#000000]/[0.80] flex-wrap  ">
+                <div className="flex gap-4 sm:gap-8 md:gap-7 px-4 sm:px-6 md:px-10 py-4 sm:py-5 md:py-7 justify-center text-[#000000]/[0.80] flex-wrap  ">
                   {colors.map(c => (
-                    <button key={c} onClick={() => setColor(c)} className={c === color ? "underline text-[#A07830]" : "hover:text-[#A07830]"}>{c}</button>
+                    <button key={c} onClick={() => { setColor(c); setShowingAll(false); setOpenFilter("") }} className={c === color ? "underline text-[#A07830]" : "hover:text-[#A07830]"}>{c}</button>
                  ))}
-                <button onClick={() => setColor("")} className="hover:text-[#A07830] ">All Colors</button>
+                <button onClick={() => { setColor(""); setShowingAll(true); setOpenFilter("") }} className="hover:text-[#A07830] ">All Colors</button>
                 </div>
             </div>
         )}
@@ -138,7 +141,7 @@ const [categories, setCategories] = useState<{id: number, name: string}[]>([])
                     onChange={(e) => setMaxPrice(e.target.value ? Number(e.target.value) : null)}
                     className="border border-black/15 rounded-full px-3 sm:px-4 md:px-4 py-2 w-20 sm:w-24 md:w-24 text-center"
                 />
-                <button onClick={() => setOpenFilter("")} className="hover:text-[#A07830]">Apply</button>
+                <button onClick={() => { setShowingAll(false); setOpenFilter("") }} className="hover:text-[#A07830]">Apply</button>
             </div>
         </div>
     )}
@@ -178,7 +181,7 @@ const [categories, setCategories] = useState<{id: number, name: string}[]>([])
                     </span>
                 )}
 
-                <button onClick={() => {setBrand(""); setColor(""); setCategoryId(null); setMinPrice(null); setMaxPrice(null)}} className="underline hover:text-[#A07830]">
+                <button onClick={() => {setBrand(""); setColor(""); setCategoryId(null); setMinPrice(null); setMaxPrice(null); setShowingAll(false)}} className="underline hover:text-[#A07830]">
                     Clear all
                 </button>
             </div>

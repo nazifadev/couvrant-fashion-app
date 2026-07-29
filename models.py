@@ -59,6 +59,7 @@ class Item(Base):
     created_at: Mapped[Optional[datetime]] = mapped_column(server_default=func.now())
     updated_at: Mapped[Optional[datetime]] = mapped_column(server_default=func.now())
     item_images: Mapped[List[Image]] = relationship(Image)
+    is_featured: Mapped[bool] = mapped_column(default=False)
     
 
 

@@ -5,11 +5,6 @@ import Footer from './Footer'
 import FilterBar from './FilterBar'
 import { useState} from "react"
 
-
-
-
-
-
 function HomePage() {
   
   const [search, setSearch] = useState("")
@@ -19,7 +14,7 @@ function HomePage() {
   const [minPrice, setMinPrice] = useState<number | null>(null)
   const [maxPrice, setMaxPrice] = useState<number | null>(null)
   const [openFilter, setOpenFilter] = useState("")
-
+  const [showingAll, setShowingAll] = useState(false)
 
   return (
 
@@ -39,7 +34,9 @@ function HomePage() {
     maxPrice = {maxPrice}
     setMaxPrice = {setMaxPrice}
     openFilter = {openFilter}
-    setOpenFilter = {setOpenFilter} 
+    setOpenFilter = {setOpenFilter}
+    showingAll = {showingAll}
+    setShowingAll = {setShowingAll}
     ></FilterBar>
     <ProductGrid 
     search= {search}
@@ -47,9 +44,9 @@ function HomePage() {
     brand = {brand}
     color = {color}
     minPrice = {minPrice}
-    maxPrice = {maxPrice}   
-    
-     ></ProductGrid>
+    maxPrice = {maxPrice}
+    showingAll = {showingAll}
+    ></ProductGrid>
     <Footer></Footer>
 
   </div>

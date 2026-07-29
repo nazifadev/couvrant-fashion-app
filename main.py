@@ -10,6 +10,8 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import or_
 from models import Item, ClothingCategory
+from sqlalchemy import desc
+
 
 load_dotenv()
 
@@ -41,8 +43,8 @@ def get_db():
 
 
 @app.get("/items", response_model = ItemsResponse)
-def get_items(db = Depends(get_db), limit: int = 9, page: int = 1, search: str = "", brand:str= "", 
-              color:str ="", category_id: int | None = None, min_price: float | None = None, max_price: float | None = None ):
+def get_items(db = Depends(get_db), limit: int = 9, page: int = 1, search: str = "", brand:str= "", featured: bool = False,
+              color:str ="", category_id: int | None = None, min_price: float | None = None, max_price: float | None = None, sort_featured: bool = True):
     skip = (page - 1) * limit
     query = db.query(Item)
 
@@ -79,10 +81,13 @@ def get_items(db = Depends(get_db), limit: int = 9, page: int = 1, search: str =
             Item.price <= max_price
             )
 
+    if featured:
+        query = query.filter(Item.is_featured == True)
 
 
+    if sort_featured:
+        query = query.order_by(desc(Item.is_featured))    
 
-        
     items = query.limit(limit).offset(skip).all()
     return { "items": items, "total": query.count()}
     

@@ -23,6 +23,7 @@ type ProductGridProps = {
     color: string;
     minPrice: number | null;
     maxPrice: number | null;
+    showingAll: boolean;
 }
 
 function ProductCard({ product }: { product: Product }) {    
@@ -54,26 +55,26 @@ function ProductCard({ product }: { product: Product }) {
 }
 
 function ProductGrid({search, category_id, brand, color, minPrice, 
-maxPrice}: ProductGridProps){
+maxPrice, showingAll}: ProductGridProps){
     
     const [products, setProducts] = useState<Product[]>([])
     const [pageNumber, setPageNumber] = useState(1)
     const [total, setTotal] = useState(0)
 
+    const isFeaturedFirst = !showingAll && !brand && !color && category_id === null && minPrice === null && maxPrice === null && !search
+
     async function fetchProducts() {
     const categoryParam = category_id !== null ? `&category_id=${category_id}` : ""
     const minPriceParam = minPrice !== null ? `&min_price=${minPrice}` : ""
     const maxPriceParam = maxPrice !== null ? `&max_price=${maxPrice}` : ""
-    const result = await fetch(`${import.meta.env.VITE_API_URL}/items?page=${pageNumber}&limit=6&search=${search}&brand=${brand}&color=${color}${categoryParam}${minPriceParam}${maxPriceParam}`)    
-        
-    
+    const sortFeaturedParam = showingAll ? `&sort_featured=false` : ""
+
+    const result = await fetch(`${import.meta.env.VITE_API_URL}/items?page=${pageNumber}&limit=6&search=${search}&brand=${brand}&color=${color}${categoryParam}${minPriceParam}${maxPriceParam}${sortFeaturedParam}`)    
      const data = await result.json()
-        
-        
         setProducts(data.items)
         setTotal(data.total)
-
     }
+
     useEffect( ()=> {fetchProducts()}, [pageNumber])
     useEffect(() => {
         if (pageNumber === 1) {
@@ -81,15 +82,18 @@ maxPrice}: ProductGridProps){
         } else {
             setPageNumber(1)
         }
-    }, [search, brand, color, category_id, minPrice, maxPrice])
+    }, [search, brand, color, category_id, minPrice, maxPrice, showingAll])
 
 
     return(
 
         <section className = "max-w-[1440px] mx-auto px-6 md:px-16 pb-25">
             
-            <p className="uppercase text-[#C07D1F] text-[12px] pt-10 tracking-[0.3em] open-sans-main" >Featured Pieces</p>
-
+            <p className="uppercase text-[#A07830] text-[12px] pt-15 tracking-[0.3em] open-sans-main">
+                {isFeaturedFirst
+                    ? "Featured Pieces"
+                    : `ALL ITEMS · ${total} RESULTS`}
+            </p>
             <div className="grid pt-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  w-full gap-13">
             {products.map(product => <ProductCard  key={product.id} product={product} />)}
             </div>
