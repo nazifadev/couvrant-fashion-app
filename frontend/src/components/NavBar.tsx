@@ -19,7 +19,7 @@ return (
     <label className="rounded-full bg-[#FFFFFF] border border-gray-300 w-full  max-w-[200px]  md:max-w-[400px]  lg:max-w-[400px]   py-2 px-3 flex items-center" >
 
         <HiMiniMagnifyingGlass className = "text-gray-500 mr-2.5" />
-        <input value={search} onChange={(e) => setSearch(e.target.value)} className="lg:text-sm md:text-sm text-[10px] w-full outline-none"
+        <input value={search} onChange={(e) => setSearch(e.target.value)} className="lg:text-sm md:text-sm text-[13px] w-full outline-none"
          placeholder= "search for..." type="text" />
 
 
