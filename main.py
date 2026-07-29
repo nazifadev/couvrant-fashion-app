@@ -85,8 +85,11 @@ def get_items(db = Depends(get_db), limit: int = 9, page: int = 1, search: str =
         query = query.filter(Item.is_featured == True)
 
 
+    if sort_featured and page > 1:
+        query = query.filter(Item.is_featured == False)
+
     if sort_featured:
-        query = query.order_by(desc(Item.is_featured))    
+        query = query.order_by(desc(Item.is_featured))
 
     items = query.limit(limit).offset(skip).all()
     return { "items": items, "total": query.count()}
