@@ -58,21 +58,23 @@ function ProductGrid({search, category_id, brand, color, minPrice,
 maxPrice, showingAll}: ProductGridProps){
     
     const [products, setProducts] = useState<Product[]>([])
+    const [loading, setLoading] = useState(true)
     const [pageNumber, setPageNumber] = useState(1)
     const [total, setTotal] = useState(0)
 
     const isFeaturedFirst = !showingAll && !brand && !color && category_id === null && minPrice === null && maxPrice === null && !search
 
     async function fetchProducts() {
-    const categoryParam = category_id !== null ? `&category_id=${category_id}` : ""
-    const minPriceParam = minPrice !== null ? `&min_price=${minPrice}` : ""
-    const maxPriceParam = maxPrice !== null ? `&max_price=${maxPrice}` : ""
-    const sortFeaturedParam = showingAll ? `&sort_featured=false` : ""
-
-    const result = await fetch(`${import.meta.env.VITE_API_URL}/items?page=${pageNumber}&limit=6&search=${search}&brand=${brand}&color=${color}${categoryParam}${minPriceParam}${maxPriceParam}${sortFeaturedParam}`)    
-     const data = await result.json()
+        setLoading(true)
+        const categoryParam = category_id !== null ? `&category_id=${category_id}` : ""
+        const minPriceParam = minPrice !== null ? `&min_price=${minPrice}` : ""
+        const maxPriceParam = maxPrice !== null ? `&max_price=${maxPrice}` : ""
+        const sortFeaturedParam = showingAll ? `&sort_featured=false` : ""
+        const result = await fetch(`${import.meta.env.VITE_API_URL}/items?page=${pageNumber}&limit=6&search=${search}&brand=${brand}&color=${color}${categoryParam}${minPriceParam}${maxPriceParam}${sortFeaturedParam}`)    
+        const data = await result.json()
         setProducts(data.items)
         setTotal(data.total)
+        setLoading(false)
     }
 
     useEffect( ()=> {fetchProducts()}, [pageNumber])
@@ -94,9 +96,16 @@ maxPrice, showingAll}: ProductGridProps){
                     ? "Featured Pieces"
                     : `ALL ITEMS · ${total} RESULTS`}
             </p>
-            <div className="grid pt-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  w-full gap-13">
-            {products.map(product => <ProductCard  key={product.id} product={product} />)}
+           {loading ? (
+            <div className="flex flex-col justify-center items-center pt-10 md:pt-20 gap-4">
+                <div className="w-8 h-8 rounded-full border-2 border-[#EBE1D0] border-t-[#A07830] animate-spin"></div>
+                <p className="text-[#A07830] text-center pt-3 text-[11px] md:text-[13px] tracking-[0.3em]  uppercase open-sans-main">Handpicking pieces just for you...</p>
             </div>
+            ) : (
+            <div className="grid pt-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 w-full gap-13">
+             {products.map(product => <ProductCard key={product.id} product={product} />)}
+            </div>
+            )}
 
             <div className= "flex justify-between pt-20">
                 <button className="bg-[#EBE1D0] rounded-full  px-5 py-3 text-[13px]  hover:bg-[#C9A96E] active:bg-[#C07D1F] active:text-[#FFFFFF] "       disabled={pageNumber==1}       onClick={() => setPageNumber(pageNumber - 1)}               >← previous</button>
